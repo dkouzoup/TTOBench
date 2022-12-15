@@ -1,7 +1,23 @@
 # trainopt-benchmark
-Open track data for benchmarking of train trajectory optimization algorithms
+Open data for benchmarking of train trajectory optimization algorithms
 
-## References
+## Content
 
-[1] Goverde, R.M.P., Scheepmaker, G.M., Wang, P.: Pseudospectral optimal
-train control. European Journal of Operational Research. 2021.
+- [Track library with benchmark instances in JSON format](tracks/README.md)
+
+- [Python interface](interfaces/python/README.md)
+
+## Citing this database
+
+- Please use the following citation if you are using this library in a scientific publication:
+
+    ```
+    @article{Kouzoupis2023,
+    title = {A public database for train trajectory optimization},
+    journal = {(paper in preparation)},
+    year = {2023},
+    author = {D. Kouzoupis and I. Pendharkar and F. Corman},
+    }
+    ```
+
+- It is recommended to mention the library version (Git tag) that you use in your simulations 
