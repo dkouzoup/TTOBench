@@ -1,4 +1,4 @@
-ID,Source,References,Min speed limit [km/h],Max speed limit [km/h],Min gradient [‰],Max gradient [‰],Length [m],Min interval [m],Max interval [m],Num intervals [-], Num stations [-]
+ID,Source,References,Min speed limit [km/h],Max speed limit [km/h],Min gradient [‰],Max gradient [‰],Length [m],Min interval [m],Max interval [m],Num intervals [-], Num timing points [-]
 00_reference,D,[1],140,140,0.0,0.0,48531.0,48531.0,48531.0,1,4
 00_var_gradient_minus_5,D,[1],140,140,-5.0,0.0,48531.0,10000.0,25000.0,3,2
 00_var_gradient_minus_10,D,[1],140,140,-10.0,0.0,48531.0,10000.0,25000.0,3,2
