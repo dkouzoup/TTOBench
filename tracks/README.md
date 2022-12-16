@@ -26,7 +26,8 @@ Traktion bei den SBB. Technical report, Bundesamt für Energie BFE
 energy-optimal speed profile generation for trains. IEEE International
 Symposium on Computational Intelligence and Informatics (2013)
 
-[4] Aradi, S., Bécsi, T., Gáspár, P.: Design of predictive optimization method for energy-effcient operation of trains. Proceedings of the European Control Conference (2014)
+[4] Aradi, S., Bécsi, T., Gáspár, P.: Design of predictive optimization method for 
+energy-effcient operation of trains. Proceedings of the European Control Conference (2014)
 
 [5] Yang, X., Li, X., Ning, B., Tang, T.: An optimisation method for train
 scheduling with minimum energy consumption and travel time in metro
@@ -38,3 +39,8 @@ control and scheduling on railway lines. Transportation Research Part B (2016)
 [7] Zhong, W., Lin, Q., Loxton, R., Teo, K.L.: Optimal train control
 via switched system dynamic optimization. Optimization Methods and
 Software (2021)
+
+[8] Ghaviha, N., Bohlin, M., Holmberg, C., Dahlquist, E., Skoglund, R.,
+Jonasson, D.: A driver advisory system with dynamic losses for passen-
+ger electric multiple units. Transportation Research Part C: Emerging
+Technologies (2017)
