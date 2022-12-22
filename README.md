@@ -13,8 +13,8 @@ Open data for benchmarking of train trajectory optimization algorithms
 
     ```
     @article{Kouzoupis2023,
-    title = {A public database for train trajectory optimization},
-    journal = {(paper in preparation)},
+    title = {A public benchmark library for train trajectory optimization},
+    journal = {Springer Nature OR Forum (paper under review)},
     year = {2023},
     author = {D. Kouzoupis and I. Pendharkar and F. Corman},
     }
