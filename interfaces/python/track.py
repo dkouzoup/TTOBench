@@ -118,7 +118,7 @@ def getAltitudeProfile(gradients:pd.DataFrame, length, altitudeStart=0):
 
 class Track():
 
-    def __init__(self, config=None, path='../../tracks') -> None:
+    def __init__(self, config=None) -> None:
         """
         Constructor of Track objects.
         """
@@ -138,7 +138,7 @@ class Track():
         self.speedLimits = pd.DataFrame(columns=cols).set_index(cols[0])
 
         self.title = '00_Untitled'
-        self.path = path
+        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../tracks')
 
         # import json file
 
