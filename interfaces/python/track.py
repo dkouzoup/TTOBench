@@ -3,25 +3,30 @@ import json
 
 import numpy as np
 import pandas as pd
+
 import matplotlib.pyplot as plt
 
-
-def importPairs(pairs, xLabel, yLabel) -> pd.DataFrame:
+def importPairs(pairs, columnName) -> pd.DataFrame:
     """
     Convert list of pairs (tuples or lists) into pandas DataFrame.
+    First element of each pair represents position in meters.
     """
 
-    if not isinstance(pairs, list):
+    # check inputs
 
-        raise ValueError("Input must be a list (of tuples or lists)!")
+    if not isinstance(columnName, str):
 
-    elementOk = lambda x: (isinstance(x, tuple) or isinstance(x, list)) and len(x) == 2
+        raise ValueError("'columnName' must be a string!")
 
-    if not all([elementOk(p) for p in pairs]):
+    if not isinstance(pairs, list) or any([not isinstance(d, tuple) and not isinstance(d, list) for d in pairs]):
 
-        raise ValueError("Every element in list should be a tuple or list of dimension 2!")
+        raise ValueError("'pairs' must be a list of tuples or lists!")
 
-    index = np.array([p[0] for p in pairs])
+    if not all([len(d) == 2 for d in pairs]):
+
+        raise ValueError("Each element in 'pairs' must be a list or tuple of length 2!")
+
+    index = np.array([d[0] for d in pairs])
 
     if any(index < 0):
 
@@ -31,68 +36,12 @@ def importPairs(pairs, xLabel, yLabel) -> pd.DataFrame:
 
         raise ValueError("Position data must monotonically increase!")
 
-    df = pd.DataFrame({xLabel:index}).set_index(xLabel)
+    # create dataframe
 
-    df[yLabel] = np.array([p[1] for p in pairs])
+    indxName = 'Position [m]'
+    df = pd.DataFrame({indxName:index, columnName:np.array([p[1] for p in pairs])}).set_index(indxName)
 
     return df
-
-
-def getUnit(string):
-    """
-    Extract parenthesized string with unit (assuming square brackets).
-    """
-
-    return string[string.find("[")+1:string.find("]")]
-
-
-def convertUnit(df:pd.DataFrame, unitOut):
-    """
-    Convert data in pandas DataFrame from m/s to km/h and vice versa.
-    """
-
-    if len(df.columns) > 1:
-
-        raise ValueError("Unit converter expects DataFrame with one column!")
-
-    dfLabel = df.columns[0]
-    unitIn = getUnit(dfLabel)
-
-    dfOut = df.copy()
-    dfOutLabel = dfLabel[:dfLabel.find("[")] + "[{}]".format(unitOut)
-    dfOut.rename(columns={dfLabel: dfOutLabel}, inplace=True)
-
-    if unitIn == 'km/h' and unitOut == 'm/s':
-
-        dfOut[dfOutLabel] /= 3.6
-
-    elif unitIn == 'm/s' and unitOut == 'km/h':
-
-        dfOut[dfOutLabel] *= 3.6
-
-    elif unitIn == unitOut:
-
-        pass
-
-    else:
-
-        raise ValueError("Unknown conversion!")
-
-    return dfOut
-
-
-def checkLimits(df:pd.DataFrame, trackLength):
-    """
-    Check start and end position.
-    """
-
-    if df.index[0] != 0:
-
-        raise ValueError("Error in '{}': First track section must start at 0 m (beginning of track)!".format(df.columns[0]))
-
-    if df.index[-1] > trackLength:
-
-        raise ValueError("Error in '{}': Last track section must start before {} m (end of track)!".format(df.columns[0], trackLength))
 
 
 def getAltitudeProfile(gradients:pd.DataFrame, length, altitudeStart=0):
@@ -129,7 +78,7 @@ class Track():
 
         self.altitude = 0  # altitude at beginning of track [m]
 
-        self.tUpper = None  # maximum travel time [s] (minimum time + reserve)
+        self.tUpper = None  # maximum travel time [s]
 
         cols = ['Position [m]', 'Gradient [permil]']
         self.gradients = pd.DataFrame(columns=cols).set_index(cols[0])
@@ -146,12 +95,12 @@ class Track():
 
             self.importJson(config)
 
-            self.checkFields()
+            self.checkTrack()
 
 
     def importJson(self, config):
         """
-        Import json data to Track object based on specified configuration file.
+        Import json data based on configuration file.
         """
 
         if not isinstance(config, dict):
@@ -233,12 +182,26 @@ class Track():
             raise ValueError("Track length must be a strictly positive number, not {}!".format(self.length))
 
 
+    def checkLimits(self, df:pd.DataFrame):
+        """
+        Check start and end position.
+        """
+
+        if df.index[0] != 0:
+
+            raise ValueError("Error in '{}': First track section must start at 0 m (beginning of track)!".format(df.columns[0]))
+
+        if df.index[-1] > self.length:
+
+            raise ValueError("Error in '{}': Last track section must start before {} m (end of track)!".format(df.columns[0], trackLength))
+
+
     def checkGradients(self):
         """
         Check gradients are initialized properly.
         """
 
-        checkLimits(self.gradients, self.length)
+        self.checkLimits(self.gradients)
 
         if self.gradients.shape[0] == 0:
 
@@ -250,19 +213,23 @@ class Track():
         Check speed limits are initialized properly.
         """
 
-        checkLimits(self.speedLimits, self.length)
+        self.checkLimits(self.speedLimits)
 
         if self.speedLimits.shape[0] == 0:
 
             raise ValueError("Speed limits not set!")
 
 
-    def checkFields(self):
+    def checkTrack(self):
         """
         Check track is initialized properly.
         """
 
         self.checkLength()
+
+        self.checkGradients()
+
+        self.checkSpeedLimits()
 
         if self.altitude is None or np.isinf(self.altitude):
 
@@ -271,10 +238,6 @@ class Track():
         if self.tUpper is not None and (self.tUpper <= 0 or np.isinf(self.tUpper)):
 
             raise ValueError("Maximum trip time (when specified) must be a strictly positive number, not {}!".format(self.tUpper))
-
-        self.checkGradients()
-
-        self.checkSpeedLimits()
 
 
     def importGradients(self, pairs):
@@ -290,9 +253,9 @@ class Track():
 
             raise ValueError("Cannot import gradients due to error: {}".format(str(e)))
 
-        self.gradients = importPairs(pairs, 'Position [m]', 'Gradient [permil]')
+        self.gradients = importPairs(pairs, 'Gradient [permil]')
 
-        checkLimits(self.gradients, self.length)
+        self.checkLimits(self.gradients)
 
 
     def importSpeedLimits(self, pairs):
@@ -308,9 +271,9 @@ class Track():
 
             raise ValueError("Cannot import speed limits due to error: {}".format(str(e)))
 
-        self.speedLimits = importPairs(pairs, 'Position [m]', 'Speed limit [km/h]')
+        self.speedLimits = importPairs(pairs, 'Speed limit [km/h]')
 
-        checkLimits(self.speedLimits, self.length)
+        self.checkLimits(self.speedLimits)
 
 
     def reverse(self):
@@ -340,24 +303,20 @@ class Track():
         return self
 
 
-    def merge(self, unitVelocity='km/h'):
+    def merge(self):
         """
         Return DataFrame with sections of constant gradient and speed limit.
         """
 
-        speedLimits = convertUnit(self.speedLimits, unitOut=unitVelocity)
-        out = self.gradients.join(speedLimits, how='outer').fillna(method='ffill')
-
-        return out
+        return self.gradients.join(self.speedLimits, how='outer').fillna(method='ffill')
 
 
-    def print(self, unitVelocity='km/h'):
+    def print(self):
         """
-        Basic printing functionality of track data.
+        Basic printing functionality.
         """
 
-        df = self.merge(unitVelocity=unitVelocity)
-        print(df)
+        print(self.merge())
 
 
     def copy(self):
@@ -399,46 +358,47 @@ class Track():
         return bool(ans)
 
 
-    def plot(self, figSize=[12, 6], unitVelocity='km/h', ax=None, style='-', title=None, filename=None, plotAltitude=True):
+    def plot(self, figSize=[12, 6], filename=None, withAltitude=True):
         """
         Basic plotting functionality.
         """
 
-        if ax is None:
+        fig, ax = plt.subplots()
 
-            _, ax = plt.subplots(1, 1)
-
-        if plotAltitude:
+        if withAltitude:
 
             alt = getAltitudeProfile(self.gradients, self.length, self.altitude)
-            alt.rename(columns={'Altitude [m]':'Altitude'}, inplace=True)
-            drawStyle = 'default'
-            ylabel = 'Altitude [m]'
+            ax.plot(alt.index*1e-3, alt.values, drawstyle='default', color='gray', label='Altitude profile')
+            ax.set_ylabel('Altitude [m]')
 
         else:
 
-            alt = self.gradients
-            alt.rename(columns={'gradient [permil]':'Gradient'}, inplace=True)
-            drawStyle = 'steps-post'
-            ylabel = 'Gradient [permil]'
+            ax.plot(self.gradients.index*1e-3, self.gradients.values, drawstyle='steps-post', color='gray', label='Gradient profile')
+            ax.set_ylabel('Gradient [permil]')
 
+        ax.set_xlabel('Position [km]')
+        ax.set_title('Visualization of ' + self.title)
+        ax.grid()
 
-        alt.plot(color='gray', title=('Visualization of ' + self.title) if title is None else title, grid=True, ylabel=ylabel, xlabel = 'Position [m]', ax=ax, style=style, drawstyle=drawStyle)
         ax.legend(loc='lower left')
 
-        speedLimits = convertUnit(self.speedLimits, unitVelocity)
-        speedLimits = pd.concat([speedLimits, pd.DataFrame({speedLimits.index.name:[self.length], speedLimits.keys()[0]:[None]}).set_index(speedLimits.index.name)])
-        speedLimits.rename(columns={'speed limit [km/h]':'Speed limit'}, inplace=True)
-
         ax2 = ax.twinx()
-        speedLimits.plot(ax=ax2, color='purple', drawstyle='steps-post', ylabel='Velocity [{}]'.format(unitVelocity), figsize=figSize, style=style).legend(loc='lower left')
+        ax2.plot(self.speedLimits.index*1e-3, self.speedLimits.values, drawstyle='steps-post', color='purple', label='Speed limit')
+        ax2.set_ylabel('Velocity [km/h]')
+
         ax2.legend(loc='upper right')
+
+        fig.tight_layout()
+
+        if figSize is not None:
+
+            fig.set_size_inches(figSize[0], figSize[1])
 
         if filename is not None:
 
             plt.savefig(filename, bbox_inches='tight')
 
-        return ax
+        plt.show()
 
 
     def crop(self, positionStart=None, positionEnd=None):
@@ -474,7 +434,7 @@ class Track():
 
 if __name__ == '__main__':
 
-    # Example code to import a track from a json file
+    # How to import a track from a json file
 
     track1 = Track(config={'id':'CH_Fribourg_Bern'})
 
@@ -482,18 +442,3 @@ if __name__ == '__main__':
     track1.print()
 
     track1.plot()
-    plt.show()
-
-    # Example code to export a track as json file
-
-    track2 = Track()
-    track2.title = '00_example'
-    track2.length = 10000
-
-    track2.importGradients([(0, 0), (8000, 10)])
-    track2.importSpeedLimits([(0, 140), (5000, 100)])
-
-    print("\nExported Track:\n")
-    track2.print(unitVelocity='m/s')  # optionally change displayed unit of velocity
-
-    track2.exportJson()
