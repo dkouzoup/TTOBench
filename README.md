@@ -1,5 +1,5 @@
-# trainopt-benchmark
-Open data for benchmarking of train trajectory optimization algorithms
+# TTOBench
+Public library of train trajectory optimization algorithms
 
 ## Content
 
