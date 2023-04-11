@@ -13,7 +13,7 @@ Public library of train trajectory optimization algorithms
 
     ```
     @article{Kouzoupis2023,
-    title = {A public benchmark library for train trajectory optimization},
+    title = {TTOBench -- a public library of train trajectory optimization problems},
     journal = {Springer Nature OR Forum (paper under review)},
     year = {2023},
     author = {D. Kouzoupis and I. Pendharkar and F. Corman},
