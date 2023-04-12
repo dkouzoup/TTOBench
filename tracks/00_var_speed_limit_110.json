@@ -1,6 +1,6 @@
 {
     "id": "00_var_speed_limit_110",
-    "timing points": [
+    "stops": [
         0.0,
         48531.0
     ],

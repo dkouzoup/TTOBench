@@ -117,7 +117,7 @@ class Track():
 
             data = json.load(file)
 
-        self.length = data['timing points'][-1]
+        self.length = data['stops'][-1]
         self.altitude = data['altitude'] if 'altitude' in data else 0
         self.title = data['id']
 
@@ -128,7 +128,7 @@ class Track():
         self.importSpeedLimits(data['speed limits'])
         self.importGradients(data['gradients'])
 
-        numPoints = len(data['timing points'])
+        numPoints = len(data['stops'])
         indxFrom = config['from'] if 'from' in config else 0
         indxTo = config['to'] if 'to' in config else numPoints-1
 
@@ -140,10 +140,10 @@ class Track():
 
             raise ValueError("Index of destination station is out of bounds!")
 
-        self.crop(data['timing points'][indxFrom], data['timing points'][indxTo])
+        self.crop(data['stops'][indxFrom], data['stops'][indxTo])
 
 
-    # NOTE: currently limited to json file with two timing points
+    # NOTE: currently limited to json file with two stops
     def exportJson(self, indent=4):
         """
         Export Track object to json file.
@@ -151,7 +151,7 @@ class Track():
 
         output = {'id':self.title, 'altitude':self.altitude}
 
-        output['timing points'] = [0., round(float(self.length), 1)]
+        output['stops'] = [0., round(float(self.length), 1)]
 
         pos = self.speedLimits.index.values.tolist()
         vel = self.speedLimits.iloc[:,0].values.tolist()
@@ -403,7 +403,7 @@ class Track():
 
     def crop(self, positionStart=None, positionEnd=None):
         """
-        Update positions based on specified timing points.
+        Update positions based on specified stops.
         """
 
         positionStart = 0 if positionStart is None else positionStart

@@ -1,7 +1,7 @@
 {
     "id": "CH_Fribourg_Bern",
     "altitude": 630.0,
-    "timing points": [
+    "stops": [
         0.0,
         31240.7
     ],

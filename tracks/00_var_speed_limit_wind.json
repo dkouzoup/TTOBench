@@ -1,6 +1,6 @@
 {
-    "id": "00_var_speed_wind",
-    "stations": [
+    "id": "00_var_speed_limit_wind",
+    "stops": [
         0.0,
         20000.0
     ],

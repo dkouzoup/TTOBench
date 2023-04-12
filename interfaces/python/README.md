@@ -9,8 +9,8 @@ Helper class to import track data from json files and vice versa.
 
     - Create a configuration file as a Python dictionary with fields:
         - `id`: track ID (required)
-        - `from`: index of starting timing point (optional)
-        - `to`: index of ending timing point (optional)
+        - `from`: index of starting stop (optional)
+        - `to`: index of ending stop (optional)
         - `time`: maximum allowed travel time (optional)
 
     - Call Track constructor specifying the above configuration file.
@@ -31,7 +31,7 @@ An example of both importing and exporting a track is provided in the main scrip
 ## Relevant attributes
 
 - `title`: string with track ID.
-- `length`: trip length between two timing points in m.
+- `length`: trip length between two stops in m.
 - `altitude`: altitude of starting point in m.
 - `tUpper`: maximum trip time in s (None if not specified).
 
@@ -41,7 +41,7 @@ An example of both importing and exporting a track is provided in the main scrip
 ## Relevant methods
 
 - `importJson`: create Track object from JSON file by specifying a configuration file as Python dictionary.
-- `exportJson`: write JSON file from Track object. Limited to two timing points (more timing points can be manually added to the JSON file as a workaround).
+- `exportJson`: write JSON file from Track object. Limited to two stops (more stops can be manually added to the JSON file as a workaround).
 - `importGradients`: define gradient sections as list of pairs (tuples or lists). Positions in m and gradients in permil.
 - `importSpeedLimits`: define speed limit sections as list of pairs (tuples or lists). Positions in m and speed limits in km/h.
 - `reverse`: change direction of track.
