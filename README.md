@@ -1,5 +1,5 @@
 # TTOBench
-Public library of train trajectory optimization algorithms
+Public library of train trajectory optimization problems
 
 ## Content
 
