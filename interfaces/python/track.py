@@ -121,10 +121,6 @@ class Track():
         self.altitude = data['altitude'] if 'altitude' in data else 0
         self.title = data['id']
 
-        if 'time' in config:
-
-            self.tUpper = config['time']
-
         self.importSpeedLimits(data['speed limits'])
         self.importGradients(data['gradients'])
 
