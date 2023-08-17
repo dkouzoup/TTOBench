@@ -1,21 +1,45 @@
 {
-    "id": "00_reference",
-    "stops": [
-        0.0,
-        8500.0,
-        13710.0,
-        48531.0
-    ],
-    "speed limits": [
-        [
+    "metadata": {
+        "id": "00_reference",
+        "created by": "Dimitris Kouzoupis",
+        "library version": "1.1",
+        "license": "This file is part of TTOBench (BSD 2-Clause License)"
+    },
+    "altitude": {
+        "unit": "m",
+        "value": 0
+    },
+    "stops": {
+        "unit": "m",
+        "values": [
             0.0,
-            140
+            8500.0,
+            13710.0,
+            48531.0
         ]
-    ],
-    "gradients": [
-        [
-            0.0,
-            0.0
+    },
+    "speed limits": {
+        "units": {
+            "position": "m",
+            "velocity": "km/h"
+        },
+        "values": [
+            [
+                0.0,
+                140
+            ]
         ]
-    ]
+    },
+    "gradients": {
+        "units": {
+            "position": "m",
+            "slope": "permil"
+        },
+        "values": [
+            [
+                0.0,
+                0.0
+            ]
+        ]
+    }
 }
