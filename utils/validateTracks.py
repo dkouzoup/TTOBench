@@ -3,7 +3,7 @@ import os
 import json
 
 
-class ValidateTrack():
+class TrackValidator():
 
     def __init__(self):
 
@@ -216,6 +216,12 @@ class ValidateTrack():
 
                     raise ValueError("First position of 'speed limits' must be equal to zero!")
 
+            if len(speedLimits['values']) > 1 and ii == len(speedLimits['values'])-1:
+
+                if pos == self.trackData['stops']['values'][-1]:
+
+                    raise ValueError("Last position of 'speed limits' must be smaller than the track length!")
+
             if ii > 0 and pos <= speedLimits['values'][ii-1][0]:
 
                 raise ValueError("Positions in 'speed limits' must be strictly increasing! Error at point {}.".format(ii+1))
@@ -271,6 +277,12 @@ class ValidateTrack():
 
                     raise ValueError("First position of 'gradients' must be equal to zero!")
 
+            if len(gradients['values']) > 1 and ii == len(gradients['values'])-1:
+
+                if pos == self.trackData['stops']['values'][-1]:
+
+                    raise ValueError("Last position of 'gradients' must be smaller than the track length!")
+
             if ii > 0 and pos <= gradients['values'][ii-1][0]:
 
                 raise ValueError("Positions in 'gradients' must be strictly increasing! Error at point {}.".format(ii+1))
@@ -278,7 +290,7 @@ class ValidateTrack():
 
 if __name__ == '__main__':
 
-    validator = ValidateTrack()
+    validator = TrackValidator()
 
     tracksDir = "../tracks"
 

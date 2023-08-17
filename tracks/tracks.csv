@@ -1,16 +1,16 @@
-ID,Source,References,Min speed limit [km/h],Max speed limit [km/h],Min gradient [permil],Max gradient [permil],Length [m],Min interval [m],Max interval [m],Num intervals [-],Num stops [-]
-00_reference,D,[1],140,140,0.0,0.0,48531.0,48531.0,48531.0,1,4
-00_stationX_stationY,P,[2],80,125,-15.4,15.9,29556.1,17.9,1606.4,165,2
-00_var_gradient_minusplus_6,D,[3],140,140,-6.67,6.67,48531.0,3000.0,22000.0,4,2
-00_var_gradient_minus_10,D,[1],140,140,-10.0,0.0,48531.0,10000.0,25000.0,3,2
-00_var_gradient_minus_5,D,[1],140,140,-5.0,0.0,48531.0,10000.0,25000.0,3,2
-00_var_gradient_plus_10,D,[1],140,140,0.0,10.0,48531.0,10000.0,25000.0,3,2
-00_var_gradient_plus_5,D,[1],140,140,0.0,5.0,48531.0,10000.0,25000.0,3,2
-00_var_speed_limit_100,D,[1],100,140,0.0,0.0,48531.0,10000.0,25000.0,3,2
-00_var_speed_limit_110,D,[1],110,140,0.0,0.0,48531.0,10000.0,25000.0,3,2
-00_var_speed_limit_120,D,[1],120,140,0.0,0.0,48531.0,10000.0,25000.0,3,2
-00_var_speed_limit_wind,D,[4],50,120,0.0,0.0,20000.0,1000.0,7000.0,6,2
-CH_Fribourg_Bern,I,"[5,6,7]",40,140,-16.9,14.1,31240.7,15.8,922.6,132,2
-CH_Stadelhofen_Altstetten,P,[8],80,125,-38.0,28.0,5790.0,10.0,430.0,223,4
-CN_Songjiazhuang_Yizhuang,D,"[9,10,11]",50,84,-24.0,24.0,22728.0,1.0,700.0,89,14
-SE_Vasteras_Kolback,I,[12],80,200,-16.7,10.8,19305.4,0.0,1279.6,52,2
+ID,Min speed limit [km/h],Max speed limit [km/h],Min gradient [permil],Max gradient [permil],Length [m],Min interval [m],Max interval [m],Num intervals [-],Num stops [-]
+00_reference,140,140,0.0,0.0,48531.0,48531.0,48531.0,1,4
+00_stationX_stationY,80,125,-15.4,15.9,29556.1,17.9,1606.4,165,2
+00_var_gradient_minusplus_6,140,140,-6.67,6.67,48531.0,3000.0,22000.0,4,2
+00_var_gradient_minus_10,140,140,-10.0,0.0,48531.0,10000.0,25000.0,3,2
+00_var_gradient_minus_5,140,140,-5.0,0.0,48531.0,10000.0,25000.0,3,2
+00_var_gradient_plus_10,140,140,0.0,10.0,48531.0,10000.0,25000.0,3,2
+00_var_gradient_plus_5,140,140,0.0,5.0,48531.0,10000.0,25000.0,3,2
+00_var_speed_limit_100,100,140,0.0,0.0,48531.0,10000.0,25000.0,3,2
+00_var_speed_limit_110,110,140,0.0,0.0,48531.0,10000.0,25000.0,3,2
+00_var_speed_limit_120,120,140,0.0,0.0,48531.0,10000.0,25000.0,3,2
+00_var_speed_limit_wind,50,120,0.0,0.0,20000.0,1000.0,7000.0,6,2
+CH_Fribourg_Bern,40,140,-16.9,14.1,31240.7,15.8,922.6,132,2
+CH_Stadelhofen_Altstetten,80,125,-38.0,28.0,5790.0,10.0,430.0,223,4
+CN_Songjiazhuang_Yizhuang,50,84,-24.0,24.0,22728.0,1.0,700.0,89,14
+SE_Vasteras_Kolback,110,200,-16.7,10.8,19305.4,106.8,1279.6,51,2
