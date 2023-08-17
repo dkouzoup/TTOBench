@@ -1,39 +1,63 @@
 {
-    "id": "00_var_speed_limit_wind",
-    "stops": [
-        0.0,
-        20000.0
-    ],
-    "speed limits": [
-        [
+    "metadata": {
+        "id": "00_var_speed_limit_wind",
+        "created by": "Dimitris Kouzoupis",
+        "library version": "1.1",
+        "license": "This file is part of TTOBench (BSD 2-Clause License)"
+    },
+    "altitude": {
+        "unit": "m",
+        "value": 0
+    },
+    "stops": {
+        "unit": "m",
+        "values": [
             0.0,
-            60
-        ],
-        [
-            2000.0,
-            120
-        ],
-        [
-            9000.0,
-            100
-        ],
-        [
-            11000.0,
-            70
-        ],
-        [
-            12000.0,
-            120
-        ],
-        [
-            18000.0,
-            50
+            20000.0
         ]
-    ],
-    "gradients": [
-        [
-            0.0,
-            0.0
+    },
+    "speed limits": {
+        "units": {
+            "position": "m",
+            "velocity": "km/h"
+        },
+        "values": [
+            [
+                0.0,
+                60
+            ],
+            [
+                2000.0,
+                120
+            ],
+            [
+                9000.0,
+                100
+            ],
+            [
+                11000.0,
+                70
+            ],
+            [
+                12000.0,
+                120
+            ],
+            [
+                18000.0,
+                50
+            ]
         ]
-    ]
+    },
+    "gradients": {
+        "units": {
+            "position": "m",
+            "slope": "permil"
+        },
+        "values": [
+            [
+                0.0,
+                0.0
+            ]
+        ]
+    }
 }
