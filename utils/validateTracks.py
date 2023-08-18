@@ -11,9 +11,9 @@ class TrackValidator():
 
         self.optionalFields = {'altitude', 'gradients'}
 
-        self.requiredMetadata = {'id'}
+        self.requiredMetadata = {'id', 'library version'}
 
-        self.optionalMetadata = {'description', 'created by', 'library version', 'license'}
+        self.optionalMetadata = {'description', 'created by', 'license'}
 
         self.trackData = None
 

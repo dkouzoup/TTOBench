@@ -6,10 +6,9 @@ Every track in the library is defined by a JSON file with the following
 fields:
 
 - `metadata` : a dictionary of key-value pairs with general information on the
-file content. The `id` key is a unique identifier of the track that should contain
-only letters, numbers and underscores. If applicable, the first part of the ID followed by
-an underscore should indicate the country of origin via the ISO Country
-Code. Otherwise, the prefix 00 shall be used.
+file content. Required fields: `id`, a unique identifier of the track that should
+contain only letters, numbers and underscores, and `library version` for compatibility
+reasons. Optional fields: `description`, `created by` and `license`.
 
 - `altitude`: altitude at beginning of track. This field is optional and may
 be used in combination with the gradients to plot the altitude profile of the
