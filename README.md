@@ -13,10 +13,13 @@ Open-source library for train trajectory optimization
 
     ```
     @article{Kouzoupis2023,
-    title = {TTOBench -- a public library of train trajectory optimization problems},
-    journal = {Springer Nature OR Forum (paper under review)},
-    year = {2023},
+    title = {TTOBench -- an Open-Source Library for Train Trajectory Optimization},
     author = {D. Kouzoupis and I. Pendharkar and F. Corman},
+    journal = {Operations Research Forum},
+    year = {2023},
+    number = {67},
+    volume = {4},
+    doi = {10.1007/s43069-023-00248-x}
     }
     ```
 
