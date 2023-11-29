@@ -35,6 +35,18 @@ uphill and downhill sections respectively. The position of the first pair should
 be 0 and the position of the last pair must be smaller than the length of the track.
 The field can be omitted for level tracks.
 
+- `curvatures`: a list of triples - position, radius at start, and radius at end - 
+indicating the beginnings of track sections and the corresponding curvature specifications.
+If radius at start is equal to radius at end then the track section has constant curvature.
+A positive radius indicates that the osculating circle is located to the right of the track; 
+a negative radius indicates that the circle is located to the left of the track. For a straight
+track the two radiuses have value "infinity". Different values for radius at start and radius at
+end denote a track section where the curvature of the section changes linearly with travelled
+distance (clothoid curve). Note that the positions must be strinctly increasing and the radius at start
+should be equal to the the redius at end of the previous section. The position of the first pair should
+be 0 and the position of the last pair must be smaller than the length of the track. 
+The field can be omitted for straight tracks.
+
 Note that the positions of speed limits and gradients will in general not coincide
 and a preprocessing step to derive track sections with constant properties
 is necessary in the context of trajectory optimization. This representation,
