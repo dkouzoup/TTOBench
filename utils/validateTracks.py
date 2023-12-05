@@ -9,7 +9,7 @@ class TrackValidator():
 
         self.requiredFields = {'metadata', 'stops', 'speed limits'}
 
-        self.optionalFields = {'altitude', 'gradients'}
+        self.optionalFields = {'altitude', 'gradients', 'curvatures'}
 
         self.requiredMetadata = {'id', 'library version'}
 
@@ -33,6 +33,8 @@ class TrackValidator():
         self.validateSpeedLimits()
 
         self.validateGradients()
+
+        self.validateCurvatures()
 
 
     def loadJson(self, filename):
@@ -229,6 +231,10 @@ class TrackValidator():
 
     def validateGradients(self):
 
+        if not 'gradients' in self.trackData:
+
+            return
+
         gradients = self.trackData['gradients']
 
         fields = {'units', 'values'}
@@ -286,6 +292,81 @@ class TrackValidator():
             if ii > 0 and pos <= gradients['values'][ii-1][0]:
 
                 raise ValueError("Positions in 'gradients' must be strictly increasing! Error at point {}.".format(ii+1))
+
+
+    def validateCurvatures(self):
+
+        if not 'curvatures' in self.trackData:
+
+            return
+
+        curvatures = self.trackData['curvatures']
+
+        fields = {'units', 'values'}
+
+        if fields != curvatures.keys():
+
+            raise ValueError("Unexpected keys in 'curvatures'! Expecting 'units' and 'values'.")
+
+        fieldsUnits = {'position', 'radius at start', 'radius at end'}
+
+        if fieldsUnits != curvatures['units'].keys():
+
+            raise ValueError("Unexpected keys in units of 'curvatures'! Expecting 'position', 'radius at start' and 'radius at end'.")
+
+        if curvatures['units']['position'] not in {'m', 'km'}:
+
+            raise ValueError("Unexpected unit in 'position' of 'curvatures'! Expecting 'm' or 'km'.")
+
+        if curvatures['units']['radius at start'] not in {'m', 'km'}:
+
+            raise ValueError("Unexpected unit in 'radius at start' of 'curvatures'! Expecting 'm' or 'km'.")
+        
+        if curvatures['units']['radius at end'] not in {'m', 'km'}:
+
+            raise ValueError("Unexpected unit in 'radius at end' of 'curvatures'! Expecting 'm' or 'km'.")
+
+        for ii, v in enumerate(curvatures['values']):
+
+            if len(v) != 3:
+
+                raise ValueError("Unexpected size of nested list in 'curvatures'! Expecting 3, got {}.".format(len(v)))
+
+            pos = v[0] 
+
+            if type(pos) not in {float, int}:
+
+                raise ValueError("Unexpected value type in position of 'curvatures'! Expecting float or int, found {}.".format(type(pos)))
+            
+            try:
+                float(v[1])
+            except:
+                raise ValueError("Unexpected value for 'radius at start' in 'curvatures'! Expecting a number or 'infinity' got '{}' at position {}.".format(v[1], ii))
+            
+            try:
+                float(v[2])
+            except:
+                raise ValueError("Unexpected value for 'radius at end' in 'curvatures'! Expecting a number or 'infinity' got {} at position {}.".format(v[2], ii))
+
+            if pos < 0:
+
+                raise ValueError("Position of 'curvatures' must be positive!")
+
+            if ii == 0:
+
+                if pos != 0:
+
+                    raise ValueError("First position of 'curvatures' must be equal to zero!")
+
+            if len(curvatures['values']) > 1 and ii == len(curvatures['values'])-1:
+
+                if pos == self.trackData['stops']['values'][-1]:
+
+                    raise ValueError("Last position of 'curvatures' must be smaller than the track length!")
+
+            if ii > 0 and pos <= curvatures['values'][ii-1][0]:
+
+                raise ValueError("Positions in 'curvatures' must be strictly increasing! Error at point {}.".format(ii+1))
 
 
 if __name__ == '__main__':
