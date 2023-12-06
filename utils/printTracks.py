@@ -8,7 +8,7 @@ def printTracks(tracksDir, filename=None):
 
     rows = []
 
-    rows += [['ID', 'Min speed limit [km/h]', 'Max speed limit [km/h]', 'Min gradient [permil]', 'Max gradient [permil]', 'Min (abs) radius [m]', 'Max (abs) radius [m]', 'Length [m]', 'Min interval [m]', 'Max interval [m]', 'Num intervals [-]', 'Num stops [-]']]
+    rows += [['ID', 'Min speed limit [km/h]', 'Max speed limit [km/h]', 'Min gradient [permil]', 'Max gradient [permil]', 'Min (abs) radius [m]', 'Length [m]', 'Min interval [m]', 'Max interval [m]', 'Num intervals [-]', 'Num stops [-]']]
 
     for file in os.listdir(tracksDir):
 
@@ -48,8 +48,8 @@ def printTracks(tracksDir, filename=None):
             positions = sorted(set(speedLimitPositions + gradientPositions + radiusPositions + [length]))
             intervals = np.diff(positions)
 
-            rows += [[id, min(speedLimitValues), max(speedLimitValues), min(gradientValues), max(gradientValues), min(radiusValuesNonNegative), 
-                      max(radiusValuesNonNegative), length, round(min(intervals), 1), round(max(intervals), 1), len(intervals), numStops]]
+            rows += [[id, min(speedLimitValues), max(speedLimitValues), min(gradientValues), max(gradientValues), min(radiusValuesNonNegative),
+                      length, round(min(intervals), 1), round(max(intervals), 1), len(intervals), numStops]]
 
     if filename is not None:
 
@@ -76,4 +76,4 @@ if __name__ == '__main__':
 
     tracksDir = "../tracks"
 
-    printTracks(tracksDir, filename='tracks.csv')
+    printTracks(tracksDir, filename=None)
