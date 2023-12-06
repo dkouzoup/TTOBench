@@ -40,12 +40,11 @@ indicating the beginnings of track sections and the corresponding curvature spec
 Note that the curvature of the track at a point is the reciprocal of the (signed) radius of the
 osculating circle at that point. A positive radius indicates a right-hand turn while 
 a negative radius a left-hand turn. If the radius at start is equal to the radius at end 
-then the track section has constant curvature.  For a straight track the two radii have value "infinity".
+then the track section has constant curvature. For a straight track the two radii have value "infinity".
 Different values for radius at start and radius at end denote a track section where the 
 curvature of the section varies linearly with the travelled distance (clothoid curve) to 
 interpolate between the two radii values. Note that the positions must be strictly 
-increasing and the radius at start of each section should be equal to the redius at end of 
-the previous section. The position of the first triple should be 0 and the position of the 
+increasing. The position of the first triple should be 0 and the position of the 
 last triple must be smaller than the length of the track. The field can be omitted for straight tracks.
 
 Note that the positions of speed limits, gradients, and curvatures will in general 
