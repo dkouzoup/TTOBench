@@ -339,13 +339,19 @@ class TrackValidator():
                 raise ValueError("Unexpected value type in position of 'curvatures'! Expecting float or int, found {}.".format(type(pos)))
             
             try:
+
                 float(v[1])
+
             except:
+
                 raise ValueError("Unexpected value for 'radius at start' in 'curvatures'! Expecting a number or 'infinity' got '{}' at position {}.".format(v[1], ii))
             
             try:
+
                 float(v[2])
+
             except:
+                
                 raise ValueError("Unexpected value for 'radius at end' in 'curvatures'! Expecting a number or 'infinity' got {} at position {}.".format(v[2], ii))
 
             if pos < 0:

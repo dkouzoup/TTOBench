@@ -26,17 +26,23 @@ def printTracks(tracksDir, filename=None):
             speedLimitValues = [v[1]*(3.6 if data['speed limits']['units']['velocity'] == 'm/s' else 1) for v in data['speed limits']['values']]  # km/h
             speedLimitPositions = [v[0]*(1e3 if data['speed limits']['units']['position'] == 'km' else 1) for v in data['speed limits']['values']]  # m
 
-            if 'gradient' in data:
+            if 'gradients' in data:
+
                 gradientValues = [v[1] for v in data['gradients']['values']]  # permil
                 gradientPositions = [v[0]*(1e3 if data['gradients']['units']['position'] == 'km' else 1) for v in data['gradients']['values']]  # m
+            
             else:
+
                 gradientValues, gradientPositions = [0.0], [0.0]
                 
             if 'curvatures' in data:
+
                 availableUnits = ['position', 'radius at start', 'radius at end']
                 radiusValuesNonNegative = [abs(float(v[i]))*(1e3 if data['curvatures']['units'][availableUnits[i]] == 'km' else 1) for v in data['curvatures']['values'] for i in range(1,3) ] # m
                 radiusPositions = [v[0]*(1e3 if data['curvatures']['units']['position'] == 'km' else 1) for v in data['curvatures']['values']]  # m
+            
             else:
+                
                 radiusValuesNonNegative, radiusPositions = [float("infinity")], [0.0]
 
             positions = sorted(set(speedLimitPositions + gradientPositions + radiusPositions + [length]))
